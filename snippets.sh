@@ -3,3 +3,5 @@ grep -e "Collected statistics from cluster" celery_periodic.log | cut -d' ' -f 2
 timeit.repeat("Datastore.get_datastores('test')", setup="from agent.business.models.ds.datastore import Datastore", repeat=3, number=1)
 
 ssh -N -f -R 8080:10.250.33.27:80 root@10.90.100.103
+
+cd /vagrant/;systemctl stop vstorage-ui-agent;AGENT_CONFIG="/root/dev.cfg" venv/bin/gunicorn --name=vstorage-ui-agent --bind=127.0.0.1:28625 --workers=1 --worker-class=gevent --access-logfile=- --error-logfile=- --log-level=DEBUG wsgi:application
